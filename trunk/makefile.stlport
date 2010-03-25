@@ -1,0 +1,29 @@
+GNUREC=-O3 -ffast-math -funroll-all-loops -fpeel-loops -ftracer -funswitch-loops -funit-at-a-time -pthread
+GO=$(GNUREC)
+CC=g++ $(GO) 
+
+STLPORT=./STLport-5.2.1  ## edit here
+
+INCLUDES=-I./tclap1.1.0/include/ -I$(STLPORT)/stlport
+LIBS=-L$(STLPORT)/lib
+CFLAGS=-c $(INCLUDES) -DUSESTLPORT
+LDFLAGS=$(LIBS) 
+INLIBS=-lstlport -lgcc_s -lpthread -lc -lm
+
+alignSrc=mmAligner.cpp mmEM.cpp
+SOURCES=$(alignSrc)
+alignObj=$(alignSrc:.cpp=.o)
+OBJECTS=$(alignObj)
+
+EXECUTABLE=m2m-aligner
+
+all: $($SOURCES) $(EXECUTABLE)
+
+$(EXECUTABLE):	$(OBJECTS) 
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@ $(INLIBS)
+
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:	
+	rm -f $(EXECUTABLE) $(OBJECTS)
