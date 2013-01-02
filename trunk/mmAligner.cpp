@@ -1,45 +1,63 @@
-/////////////////////////////////////////////////////////////////////
-//	Author: Sittichai Jiampojamarn
-//	Email: sj@cs.ualberta.ca
-//
-//	Many-to-many alignment : 
-//  History : 
-//
-//  Sept 9, 2009 : implemented n-best generation model to output
-//  n-best alignments. It's based on a variation of n-best viterbi algorithm.
-//				 : added an initialization feature, so we can change 
-//				 : EM starting point and also inject lingustic knowledge.
-//
-//	Mar 2, 2009 : re-formatting input/output for 
-//  NEWS: Shared Task on Transliteration
-//
-//	Dec 10, 2008 : re-implemented the algorithm based on 
-//	Sittichai Jiampojamarn, Grzegorz Kondrak and Tarek Sherif. 
-//  "Applying Many-to-Many Alignments and Hidden Markov Models 
-//	to Letter-to-Phoneme Conversion". Proceedings of the Annual 
-//	Conference of the North American Chapter of the Association 
-//	for Computational Linguistics (NAACL-HLT 2007), Rochester, 
-//	NY, April 2007, pp.372-379
-//
-//	Credits : Tarek Sherif originally proposed this algorithm 
-//  based on the Ristad and Yianilos (1997) stochastic transducer
-//  as a part of his Master thesis graduated in 2007, U. of Alberta.
-//
-//  Citation : If you use the code for research or commercial purposes,
-//  please acknowledge its use with a citation:
-//
-//  @InProceedings{jiampojamarn2007:main,
-//  author    = {Jiampojamarn, Sittichai  and  Kondrak, Grzegorz  and  Sherif, Tarek},
-//  title     = {Applying Many-to-Many Alignments and Hidden Markov Models to Letter-to-Phoneme Conversion},
-//  booktitle = {Human Language Technologies 2007: The Conference of the North American Chapter of the Association for Computational Linguistics; Proceedings of the Main Conference},
-//  month     = {April},
-//  year      = {2007},
-//  address   = {Rochester, New York},
-//  publisher = {Association for Computational Linguistics},
-//  pages     = {372--379},
-//  url       = {http://www.aclweb.org/anthology/N/N07/N07-1047}
-//  }
-//
+/********************************************************************
+*
+* file: mmAligner.cpp
+*
+* Copyright (c) 2007, Sittichai Jiampojamarn
+* All rights reverved.
+* 
+* See the file COPYING in the top directory of this distribution
+* for more information.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+* DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+* OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*
+* Author: Sittichai Jiampojamarn
+* Email: sj@cs.ualberta.ca
+*
+* Many-to-many alignment : 
+* History : 
+*
+* Sept 9, 2009 : implemented n-best generation model to output
+* n-best alignments. It's based on a variation of n-best viterbi algorithm.
+*   : added an initialization feature, so we can change 
+*   : EM starting point and also inject lingustic knowledge.
+*
+* Mar 2, 2009 : re-formatting input/output for 
+*  NEWS: Shared Task on Transliteration
+*
+* Dec 10, 2008 : re-implemented the algorithm based on 
+*	Sittichai Jiampojamarn, Grzegorz Kondrak and Tarek Sherif. 
+*  "Applying Many-to-Many Alignments and Hidden Markov Models 
+*	to Letter-to-Phoneme Conversion". Proceedings of the Annual 
+*	Conference of the North American Chapter of the Association 
+*	for Computational Linguistics (NAACL-HLT 2007), Rochester, 
+*	NY, April 2007, pp.372-379
+*
+* Credits : Tarek Sherif originally proposed this algorithm 
+*  based on the Ristad and Yianilos (1997) stochastic transducer
+*  as a part of his Master thesis graduated in 2007, U. of Alberta.
+*
+* Citation : If you use the code for research or commercial purposes,
+*  please acknowledge its use with a citation:
+*
+*  @InProceedings{jiampojamarn2007:main,
+*  author    = {Jiampojamarn, Sittichai  and  Kondrak, Grzegorz  and  Sherif, Tarek},
+*  title     = {Applying Many-to-Many Alignments and Hidden Markov Models to Letter-to-Phoneme Conversion},
+*  booktitle = {Human Language Technologies 2007: The Conference of the North American Chapter of the Association for Computational Linguistics; Proceedings of the Main Conference},
+*  month     = {April},
+*  year      = {2007},
+*  address   = {Rochester, New York},
+*  publisher = {Association for Computational Linguistics},
+*  pages     = {372--379},
+*  url       = {http://www.aclweb.org/anthology/N/N07/N07-1047}
+*  }
+*
+**********************************************************************/
 
 #include <iostream>
 #include <list>
@@ -54,6 +72,17 @@
 
 using namespace std;
 using namespace TCLAP;
+
+namespace TCLAP
+{
+        /**
+         * long doubles have value-like semantics.
+         */
+        template<>
+        struct ArgTraits<long double> {
+		typedef ValueLike ValueCategory;
+        };
+}
 
 inline void printTimeStamp(time_t startT)
 {
@@ -268,6 +297,3 @@ int main(int argc, char** argv)
 	}
 	return 0;
 }
-
-
-
