@@ -2,7 +2,7 @@ GNUREC=-O3 -ffast-math -funroll-all-loops -fpeel-loops -ftracer -funswitch-loops
 GO=$(GNUREC)
 CC=g++ $(GO) 
 
-INCLUDES=-I./tclap1.1.0/include/ 
+INCLUDES=-I./tclap-1.2.1/include/ 
 CFLAGS=-c $(INCLUDES) 
 LDFLAGS=$(LIBS) 
 INLIBS=-lgcc_s -lpthread -lc -lm
