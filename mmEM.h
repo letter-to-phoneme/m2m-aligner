@@ -3,7 +3,7 @@
 * file: mmEM.h
 *
 * Copyright (c) 2007, Sittichai Jiampojamarn
-* All rights reverved.
+* All rights reserved.
 * 
 * See the file COPYING in the top directory of this distribution
 * for more information.
