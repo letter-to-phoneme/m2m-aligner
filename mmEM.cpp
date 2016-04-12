@@ -765,7 +765,7 @@ vector<long double> mmEM::nViterbi_align(param myParam, vector_str x, vector_str
 				{
 					string ssX = join(x, xl-i,i);
 	
-					long double score = (long double) logl(probs[ssX][myParam.nullChar]) * i;
+					long double score = (long double) std::log((long double)probs[ssX][myParam.nullChar]) * i;
 					qtmp.backX = i;
 					qtmp.backY = 0;
 
@@ -784,7 +784,7 @@ vector<long double> mmEM::nViterbi_align(param myParam, vector_str x, vector_str
 				{
 					string ssY = join(y, yl-j, j);
 
-					long double score = (long double) logl(probs[myParam.nullChar][ssY]) * j;
+					long double score = (long double) std::log((long double)probs[myParam.nullChar][ssY]) * j;
 					qtmp.backX = 0;
 					qtmp.backY = j;
 
@@ -814,7 +814,7 @@ vector<long double> mmEM::nViterbi_align(param myParam, vector_str x, vector_str
 						string ssX = join(x, xl-i ,i);
 						string ssY = join(y, yl-j, j);
 
-						long double score = (long double) logl(probs[ssX][ssY]) * max(i,j);
+						long double score = (long double) std::log((long double)probs[ssX][ssY]) * max(i,j);
 						qtmp.backX = i;
 						qtmp.backY = j;
 						for (int rindex = 0; rindex < Q[xl-i][yl-j].size(); rindex++)
@@ -950,7 +950,7 @@ long double mmEM::viterbi_align(param myParam, vector_str x, vector_str y, vecto
 					//string ssX = x.substr(xl-i,i);
 					string ssX = join(x, xl-i,i);
 
-					score = (long double) logl(probs[ssX][myParam.nullChar]) * i;
+					score = (long double) std::log((long double)probs[ssX][myParam.nullChar]) * i;
 					if (score + Q[xl-i][yl] > Q[xl][yl])
 					{
 						Q[xl][yl] = score + Q[xl-i][yl];
@@ -967,7 +967,7 @@ long double mmEM::viterbi_align(param myParam, vector_str x, vector_str y, vecto
 					//string ssY = y.substr(yl-j,j);
 					string ssY = join(y, yl-j, j);
 
-					score = (long double) logl(probs[myParam.nullChar][ssY]) * j;
+					score = (long double) std::log((long double)probs[myParam.nullChar][ssY]) * j;
 					if (score + Q[xl][yl-j] > Q[xl][yl])
 					{
 						Q[xl][yl] = score + Q[xl][yl-j];
@@ -996,7 +996,7 @@ long double mmEM::viterbi_align(param myParam, vector_str x, vector_str y, vecto
 						string ssX = join(x, xl-i ,i);
 						string ssY = join(y, yl-j, j);
 
-						score = (long double) logl(probs[ssX][ssY]) * max(i,j);
+						score = (long double) std::log((long double)probs[ssX][ssY]) * max(i,j);
 						if ( score + Q[xl-i][yl-j] > Q[xl][yl])
 						{
 							Q[xl][yl] = score + Q[xl-i][yl-j];
