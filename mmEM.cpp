@@ -100,20 +100,18 @@ void mmEM::initialization(param myParam, vector_2str stringX, vector_2str string
 	}
 
 	// initialization with uniform distribution all possible alignments //
-	
-	long double totalCount = 0; // keep track how many observations
 
 	// for each x and y pair //
-	for (int i=0; i < stringX.size(); i++)
+	for (unsigned int i=0; i < stringX.size(); i++)
 	{
 		// over lengths of x and y
-		for (int xl = 0; xl < stringX[i].size(); xl++)
+		for (unsigned int xl = 0; xl < stringX[i].size(); xl++)
 		{
-			for (int yl = 0; yl < stringY[i].size(); yl++)
+			for (unsigned int yl = 0; yl < stringY[i].size(); yl++)
 			{
 				if (myParam.delX)
 				{
-					for (int j=0; (j < myParam.maxX) && (xl-j >= 0); j++)
+					for (unsigned int j=0; (j < myParam.maxX) && (xl >= j); j++)
 					{
 						//string ssX = stringX[i].substr(xl-j,j+1);
 						string ssX = join(stringX[i], xl-j , j+1);
@@ -123,7 +121,7 @@ void mmEM::initialization(param myParam, vector_2str stringX, vector_2str string
 
 				if (myParam.delY)
 				{
-					for (int k=0; (k < myParam.maxY) && (yl-k >=0); k++)
+					for (unsigned int k=0; (k < myParam.maxY) && (yl >= k); k++)
 					{
 						// string ssY = stringY[i].substr(yl-k,k+1);
 						string ssY = join(stringY[i], yl-k, k+1);
@@ -131,9 +129,9 @@ void mmEM::initialization(param myParam, vector_2str stringX, vector_2str string
 					}
 				}
 
-				for (int j = 0; (j < myParam.maxX) && (xl-j >= 0); j++)
+				for (unsigned int j = 0; (j < myParam.maxX) && (xl >= j); j++)
 				{
-					for (int k=0; (k < myParam.maxY) && (yl-k >=0); k++)
+					for (unsigned int k=0; (k < myParam.maxY) && (yl >= k); k++)
 					{
 						//string ssX = stringX[i].substr(xl-j,j+1);
 						//string ssY = stringY[i].substr(yl-k,k+1);
@@ -311,7 +309,7 @@ vector_2Double mmEM::backwardEval(param myParam, vector_str x, vector_str y)
 
 	//resize vector//
 	beta.resize(x.size()+1);
-	for (int i = 0 ; i < beta.size(); i++)
+	for (unsigned int i = 0 ; i < beta.size(); i++)
 	{
 		beta[i].resize(y.size()+1);
 	}
@@ -329,7 +327,7 @@ vector_2Double mmEM::backwardEval(param myParam, vector_str x, vector_str y)
 
 			if ((xl < x.size()) && (myParam.delX))
 			{
-				for (int i = 1; (i <= myParam.maxX) && (xl+i <= x.size()); i++)
+				for (unsigned int i = 1; (i <= myParam.maxX) && (xl+i <= x.size()); i++)
 				{
 					//string ssX = x.substr(xl, i);
 					string ssX = join(x, xl, i);
@@ -339,7 +337,7 @@ vector_2Double mmEM::backwardEval(param myParam, vector_str x, vector_str y)
 
 			if ((yl < y.size()) && (myParam.delY))
 			{
-				for (int j = 1; (j <= myParam.maxY) && (yl+j <= y.size()); j++)
+				for (unsigned int j = 1; (j <= myParam.maxY) && (yl+j <= y.size()); j++)
 				{
 					//string ssY = y.substr(yl,j);
 					string ssY = join(y, yl, j);
@@ -349,9 +347,9 @@ vector_2Double mmEM::backwardEval(param myParam, vector_str x, vector_str y)
 
 			if ((xl < x.size()) && (yl < y.size()))
 			{
-				for (int i = 1; (i <= myParam.maxX) && (xl+i <= x.size()); i++)
+				for (unsigned int i = 1; (i <= myParam.maxX) && (xl+i <= x.size()); i++)
 				{
-					for (int j = 1; (j <= myParam.maxY) && (yl+j <= y.size()); j++)
+					for (unsigned int j = 1; (j <= myParam.maxY) && (yl+j <= y.size()); j++)
 					{
 						//string ssX = x.substr(xl,i);
 						//string ssY = y.substr(yl,j);
@@ -383,15 +381,15 @@ vector_2Double mmEM::forwardEval(param myParam, vector_str x, vector_str y)
 
 	// resize vector //
 	alpha.resize(x.size()+1);
-	for(int i = 0; i < alpha.size(); i++)
+	for(unsigned int i = 0; i < alpha.size(); i++)
 	{
 		alpha[i].resize(y.size()+1);
 	}
 
 	alpha[0][0] = 1.0;
-	for (int xl = 0; xl <= x.size(); xl++)
+	for (unsigned int xl = 0; xl <= x.size(); xl++)
 	{
-		for (int yl = 0; yl <= y.size(); yl++)
+		for (unsigned int yl = 0; yl <= y.size(); yl++)
 		{
 			if ((xl > 0) || (yl > 0))
 			{
@@ -400,7 +398,7 @@ vector_2Double mmEM::forwardEval(param myParam, vector_str x, vector_str y)
 
 			if ( (xl > 0) && (myParam.delX) )
 			{
-				for (int i = 1; (i <= myParam.maxX) && (xl-i >= 0); i++)
+				for (unsigned int i = 1; (i <= myParam.maxX) && (xl >= i); i++)
 				{
 					//string ssX = x.substr(xl-i, i);
 					string ssX = join(x, xl-i,i);
@@ -410,7 +408,7 @@ vector_2Double mmEM::forwardEval(param myParam, vector_str x, vector_str y)
 
 			if ( (yl > 0) && (myParam.delY) )
 			{
-				for (int j = 1; (j <= myParam.maxY) && (yl-j >= 0); j++)
+				for (unsigned int j = 1; (j <= myParam.maxY) && (yl >= j); j++)
 				{
 					//string ssY = y.substr(yl-j, j);
 					string ssY = join(y, yl-j, j);
@@ -420,9 +418,9 @@ vector_2Double mmEM::forwardEval(param myParam, vector_str x, vector_str y)
 
 			if ( (yl > 0) && (xl > 0) )
 			{
-				for (int i = 1; (i <= myParam.maxX) && (xl-i >= 0); i++)
+				for (unsigned int i = 1; (i <= myParam.maxX) && (xl >= i); i++)
 				{
-					for (int j = 1; (j <= myParam.maxY) && (yl-j >= 0); j++)
+					for (unsigned int j = 1; (j <= myParam.maxY) && (yl >= j); j++)
 					{
 						//string ssX = x.substr(xl-i,i);
 						//string ssY = y.substr(yl-j,j);
@@ -452,9 +450,9 @@ vector_2Double mmEM::forwardEval(param myParam, vector_str x, vector_str y)
 void mmEM::printAlphaBeta(vector_2Double alpha)
 {
 	cout << endl;
-	for (int i = 0; i < alpha.size() ; i++)
+	for (unsigned int i = 0; i < alpha.size() ; i++)
 	{
-		for (int j = 0; j < alpha[i].size(); j++)
+		for (unsigned int j = 0; j < alpha[i].size(); j++)
 		{
 			cout << alpha[i][j] << " ";
 		}
@@ -489,13 +487,13 @@ bool mmEM::expectation(param myParam, vector_str x, vector_str y)
 		alpha_x_y = alpha[x.size()][y.size()];
 	}
 
-	for (int xl = 0 ; xl <= x.size(); xl++)
+	for (unsigned int xl = 0 ; xl <= x.size(); xl++)
 	{
-		for (int yl = 0; yl <= y.size(); yl++)
+		for (unsigned int yl = 0; yl <= y.size(); yl++)
 		{
 			if ( (xl > 0) && (myParam.delX) )
 			{
-				for (int i = 1; (i <= myParam.maxX) && (xl-i >= 0); i++)
+				for (unsigned int i = 1; (i <= myParam.maxX) && (xl >= i); i++)
 				{
 					//string ssX = x.substr(xl-i, i);
 					string ssX = join(x, xl-i,i);
@@ -511,7 +509,7 @@ bool mmEM::expectation(param myParam, vector_str x, vector_str y)
 
 			if ( (yl > 0) && (myParam.delY) )
 			{
-				for (int j = 1; (j <= myParam.maxY) && (yl-j >= 0); j++)
+				for (unsigned int j = 1; (j <= myParam.maxY) && (yl >= j); j++)
 				{
 					//string ssY = y.substr(yl-j, j);
 					string ssY = join(y, yl-j, j);
@@ -527,9 +525,9 @@ bool mmEM::expectation(param myParam, vector_str x, vector_str y)
 
 			if ( (yl > 0) && (xl > 0) )
 			{
-				for (int i = 1; (i <= myParam.maxX) && (xl-i >= 0); i++)
+				for (unsigned int i = 1; (i <= myParam.maxX) && (xl >= i); i++)
 				{
-					for (int j = 1; (j <= myParam.maxY) && (yl-j >= 0); j++)
+					for (unsigned int j = 1; (j <= myParam.maxY) && (yl >= j); j++)
 					{
 						//string ssX = x.substr(xl-i,i);
 						//string ssY = y.substr(yl-j,j);
@@ -632,7 +630,7 @@ void mmEM::training(param myParam)
 		cout << "Iteration " << atIter << endl;
 		// for each x and y pair //
 		cout << "Expectation ... " ;
-		for (int i = 0; i < wordX.size(); i++)
+		for (unsigned int i = 0; i < wordX.size(); i++)
 		{
 			// expectation //
 			expectation(myParam, wordX[i], wordY[i]);	
@@ -734,7 +732,7 @@ vector<long double> mmEM::nViterbi_align(param myParam, vector_str x, vector_str
 
 	Q.resize(x.size()+1);
 
-	for (int i = 0; i < Q.size() ;i++)
+	for (unsigned int i = 0; i < Q.size() ;i++)
 	{
 		Q[i].resize(y.size()+1);
 	}
@@ -745,9 +743,9 @@ vector<long double> mmEM::nViterbi_align(param myParam, vector_str x, vector_str
 	qtmp.backR = -1;
 	Q[0][0].push_back(qtmp);	
 
-	for (int xl =0 ; xl <= x.size(); xl++)
+	for (unsigned int xl =0 ; xl <= x.size(); xl++)
 	{
-		for (int yl = 0; yl <= y.size(); yl++)
+		for (unsigned int yl = 0; yl <= y.size(); yl++)
 		{
 			/*if ((xl > 0) || (yl > 0))
 			{
@@ -761,7 +759,7 @@ vector<long double> mmEM::nViterbi_align(param myParam, vector_str x, vector_str
 
 			if ( (xl > 0) && (myParam.delX) )
 			{
-				for (int i = 1; (i <= myParam.maxX) && (xl-i >=0); i++)
+				for (unsigned int i = 1; (i <= myParam.maxX) && (xl >= i); i++)
 				{
 					string ssX = join(x, xl-i,i);
 	
@@ -769,7 +767,7 @@ vector<long double> mmEM::nViterbi_align(param myParam, vector_str x, vector_str
 					qtmp.backX = i;
 					qtmp.backY = 0;
 
-					for (int rindex = 0; rindex < Q[xl-i][yl].size(); rindex++)
+					for (unsigned int rindex = 0; rindex < Q[xl-i][yl].size(); rindex++)
 					{
 						qtmp.score = score + Q[xl-i][yl][rindex].score;
 						qtmp.backR = rindex;
@@ -780,7 +778,7 @@ vector<long double> mmEM::nViterbi_align(param myParam, vector_str x, vector_str
 
 			if ( (yl > 0) && (myParam.delY) )
 			{
-				for (int j = 1; (j <= myParam.maxY) && (yl-j >=0); j++)
+				for (unsigned int j = 1; (j <= myParam.maxY) && (yl >= j); j++)
 				{
 					string ssY = join(y, yl-j, j);
 
@@ -788,7 +786,7 @@ vector<long double> mmEM::nViterbi_align(param myParam, vector_str x, vector_str
 					qtmp.backX = 0;
 					qtmp.backY = j;
 
-					for (int rindex  = 0; rindex < Q[xl][yl-j].size(); rindex++)
+					for (unsigned int rindex  = 0; rindex < Q[xl][yl-j].size(); rindex++)
 					{
 						qtmp.score = score + Q[xl][yl-j][rindex].score;
 						qtmp.backR = rindex;
@@ -799,9 +797,9 @@ vector<long double> mmEM::nViterbi_align(param myParam, vector_str x, vector_str
 
 			if ( (xl > 0) && (yl > 0) )
 			{
-				for (int i = 1; (i <= myParam.maxX) && (xl-i >=0); i++)
+				for (unsigned int i = 1; (i <= myParam.maxX) && (xl >= i); i++)
 				{
-					for (int j = 1; (j <= myParam.maxY) && (yl-j >=0); j++)
+					for (unsigned int j = 1; (j <= myParam.maxY) && (yl >= j); j++)
 					{
 						if (! myParam.eqMap)
 						{
@@ -817,7 +815,7 @@ vector<long double> mmEM::nViterbi_align(param myParam, vector_str x, vector_str
 						long double score = (long double) std::log((long double)probs[ssX][ssY]) * max(i,j);
 						qtmp.backX = i;
 						qtmp.backY = j;
-						for (int rindex = 0; rindex < Q[xl-i][yl-j].size(); rindex++)
+						for (unsigned int rindex = 0; rindex < Q[xl-i][yl-j].size(); rindex++)
 						{
 							qtmp.score = score + Q[xl-i][yl-j][rindex].score;
 							qtmp.backR = rindex;
@@ -841,7 +839,7 @@ vector<long double> mmEM::nViterbi_align(param myParam, vector_str x, vector_str
 	sort(Q[x.size()][y.size()].begin(), Q[x.size()][y.size()].end(), DqSortedFn);
 
 	//backTracking
-	for (int k=0; ( k < myParam.nBest ) && (Q[x.size()][y.size()].size() > 0) ; k++)
+	for (unsigned int k=0; ( k < myParam.nBest ) && (Q[x.size()][y.size()].size() > 0) ; k++)
 	{
 		long double score = Q[x.size()][y.size()][0].score;
 
@@ -920,7 +918,7 @@ long double mmEM::viterbi_align(param myParam, vector_str x, vector_str y, vecto
 	backX.resize(x.size()+1);
 	backY.resize(x.size()+1);
 	
-	for (int i=0 ; i < Q.size() ; i++)
+	for (unsigned int i=0 ; i < Q.size() ; i++)
 	{
 		Q[i].resize(y.size()+1);
 		backX[i].resize(y.size()+1);
@@ -932,9 +930,9 @@ long double mmEM::viterbi_align(param myParam, vector_str x, vector_str y, vecto
 	// used to indicate zero probability.
 
 	Q[0][0] = 0;
-	for (int xl = 0; xl <= x.size(); xl++)
+	for (unsigned int xl = 0; xl <= x.size(); xl++)
 	{
-		for (int yl = 0; yl <= y.size(); yl++)
+		for (unsigned int yl = 0; yl <= y.size(); yl++)
 		{
 			if ((xl > 0) || (yl > 0))
 			{
@@ -945,7 +943,7 @@ long double mmEM::viterbi_align(param myParam, vector_str x, vector_str y, vecto
 
 			if ( (xl > 0) && (myParam.delX) )
 			{
-				for (int i = 1; (i <= myParam.maxX) && (xl-i >=0); i++)
+				for (unsigned int i = 1; (i <= myParam.maxX) && (xl >= i); i++)
 				{
 					//string ssX = x.substr(xl-i,i);
 					string ssX = join(x, xl-i,i);
@@ -962,7 +960,7 @@ long double mmEM::viterbi_align(param myParam, vector_str x, vector_str y, vecto
 
 			if ( (yl > 0) && (myParam.delY) )
 			{
-				for (int j = 1; (j <= myParam.maxY) && (yl-j >=0); j++)
+				for (unsigned int j = 1; (j <= myParam.maxY) && (yl >= j); j++)
 				{
 					//string ssY = y.substr(yl-j,j);
 					string ssY = join(y, yl-j, j);
@@ -979,9 +977,9 @@ long double mmEM::viterbi_align(param myParam, vector_str x, vector_str y, vecto
 
 			if ( (xl > 0) && (yl > 0) )
 			{
-				for (int i = 1; (i <= myParam.maxX) && (xl-i >=0); i++)
+				for (unsigned int i = 1; (i <= myParam.maxX) && (xl >= i); i++)
 				{
-					for (int j = 1; (j <= myParam.maxY) && (yl-j >=0); j++)
+					for (unsigned int j = 1; (j <= myParam.maxY) && (yl >= j); j++)
 					{
 						if (! myParam.eqMap)
 						{
@@ -1100,7 +1098,7 @@ void mmEM::createAlignments(param myParam)
 				lessNbest++;
 				cout << join(wordX[i],0, wordX[i].size(), "") << "\t" << join(wordY[i],0,wordY[i].size(), "") << "\t has " << nScore.size() << " alignments" << endl;
 			}
-			for (int nbest = 0; nbest < nScore.size(); nbest++)
+			for (unsigned int nbest = 0; nbest < nScore.size(); nbest++)
 			{
 				for (unsigned int k = 0; k < nAlignX[nbest].size(); k++)
 				{
