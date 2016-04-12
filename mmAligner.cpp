@@ -107,8 +107,8 @@ int main(int argc, char** argv)
 		ValueArg<string> alignerOut("","alignerOut", "Aligner model output filename", false, "", "string", cmd);
 		ValueArg<string> alignerIn("","alignerIn", "Aligner model input filename", false, "", "string", cmd);
 
-		ValueArg<int> maxX("", "maxX", "Maximum length of substring x (default 2)", false, 2, "int", cmd);
-		ValueArg<int> maxY("", "maxY", "Maximum length of substring y (default 2)", false, 2, "int", cmd);
+		ValueArg<unsigned int> maxX("", "maxX", "Maximum length of substring x (default 2)", false, 2, "int", cmd);
+		ValueArg<unsigned int> maxY("", "maxY", "Maximum length of substring y (default 2)", false, 2, "int", cmd);
 
 		SwitchArg delX("", "delX", "Allow deletion of substring x (default false)", cmd, false);
 		SwitchArg delY("", "delY", "Allow deletion of substring y (default false)", cmd, false);
@@ -138,7 +138,7 @@ int main(int argc, char** argv)
 		ValuesConstraint<string> allowFormats(allowFormat);
 		ValueArg<string> inFormat("","inFormat","Input file format [l2p, news] (default news)", false, "news", &allowFormats, cmd);
 
-		ValueArg<int> nBest("","nBest","Generate n-best alignments (default n=1)", false, 1, "int", cmd);
+		ValueArg<unsigned int> nBest("","nBest","Generate n-best alignments (default n=1)", false, 1, "int", cmd);
 
 		ValueArg<string> initFile("","init","Initial mapping (model) filename (default null)", false, "", "string", cmd);
 
