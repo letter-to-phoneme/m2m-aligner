@@ -35,8 +35,8 @@ typedef struct PARAM{
 		string alignerOut;
 		string alignerIn;
 
-		int maxX;
-		int maxY;
+		unsigned int maxX;
+		unsigned int maxY;
 
 		bool delX;
 		bool delY;
@@ -53,7 +53,7 @@ typedef struct PARAM{
 		string sepInChar;
 
 		string inFormat;
-		int nBest;
+		unsigned int nBest;
 
 		string initFile;
 		long double initProbCut;
